@@ -4,10 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pixel - draw :D</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
 </head>
 <body>
-  <canvas id="canvas"></canvas>
+  <!-- populated by the library 'pickr' -->
+  <div>
+    <p>
+      pick a color
+    </p>
+    <div class="color-picker"></div>
+  </div>
 
+  <canvas id="canvas"></canvas>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>
+  <script src="colorpicker.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

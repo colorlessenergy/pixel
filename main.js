@@ -16,8 +16,7 @@
   canvas.addEventListener('touchmove', paintCanvas);
 
   function paintCanvas(ev) {
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = window.app.color;
     ctx.fillRect(ev.offsetX - 1, ev.offsetY - 1, PIXEL_SIZE, PIXEL_SIZE)
   }
-
 })();
