@@ -1,0 +1,24 @@
+{
+  "name": "pixel",
+  "version": "1.0.0",
+  "description": "backend of pixel",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colorlessenergy/pixel.git"
+  },
+  "author": "colorlessenergy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colorlessenergy/pixel/issues"
+  },
+  "homepage": "https://github.com/colorlessenergy/pixel#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
