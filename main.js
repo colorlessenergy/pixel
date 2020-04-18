@@ -1,6 +1,9 @@
 (function () {
   'use strict'
 
+  const socketController = window.app.socket;
+  const socket = socketController.getSocketObject();
+
   const canvas = document.querySelector('#canvas');
   canvas.width = 500;
   canvas.height = 500;
@@ -15,8 +18,26 @@
   canvas.addEventListener('mousemove', paintCanvas);
   canvas.addEventListener('touchmove', paintCanvas);
 
-  function paintCanvas(ev) {
-    ctx.fillStyle = window.app.color;
-    ctx.fillRect(ev.offsetX - 1, ev.offsetY - 1, PIXEL_SIZE, PIXEL_SIZE)
+
+  socket.on('transmit pixel data', function (data) {
+    data = data.pixelData;
+    colorCanvas(data);
+  });
+
+  function colorCanvas (data) {
+    ctx.fillStyle = data.color;
+    ctx.fillRect(data.x, data.y, PIXEL_SIZE, PIXEL_SIZE);
   }
+
+  function paintCanvas(ev) {
+    let pixelData = {
+      x: ev.offsetX - 1,
+      y: ev.offsetY - 1,
+      color: window.app.color
+    }
+
+    colorCanvas(pixelData);
+    socketController.sendPixelData(pixelData)
+  }
+
 })();
