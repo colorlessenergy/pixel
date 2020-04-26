@@ -16,6 +16,17 @@
     <div class="color-picker"></div>
   </div>
 
+  <div>
+    <label for="brushSize">size: <span id="currentBrushSize">25</span></label>
+    <input type="range" 
+      id="brushSize" 
+      name="brushSize" 
+      min="5"
+      max="50" 
+      value="25" 
+      step="1">
+  </div>
+
   <canvas id="canvas"></canvas>
   
   <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>

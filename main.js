@@ -8,15 +8,22 @@
   canvas.width = 500;
   canvas.height = 500;
   
-  const PIXEL_SIZE = 25;
+  let PIXEL_SIZE = 25;
   
   const ctx = canvas.getContext('2d');
-  
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  const brushSizeSlider = document.querySelector('#brushSize');
+
+  brushSizeSlider.addEventListener('input', function (ev) {
+    let displayBrushSizeValue = document.querySelector('#currentBrushSize');
+    let sliderValue = ev.target.value;
+
+    displayBrushSizeValue.textContent = sliderValue;
+    PIXEL_SIZE = sliderValue;
+  });
 
   canvas.addEventListener('mousemove', paintCanvas);
-
   canvas.addEventListener("touchmove", function (ev) {
     // prevent scrolling
     if (ev.target == canvas) {
