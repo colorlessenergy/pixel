@@ -9,10 +9,14 @@
   canvas.height = 500;
   
   let PIXEL_SIZE = 25;
+  let points = [];
+
+  
   
   const ctx = canvas.getContext('2d');
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+  ctx.lineWidth = PIXEL_SIZE;
+  ctx.lineJoin = ctx.lineCap = 'round';
+  
   const brushSizeSlider = document.querySelector('#brushSize');
 
   brushSizeSlider.addEventListener('input', function (ev) {
@@ -24,46 +28,50 @@
   });
 
   canvas.addEventListener('mousemove', paintCanvas);
-  canvas.addEventListener("touchmove", function (ev) {
+  canvas.addEventListener('mouseout', resetPoints)
+  canvas.addEventListener('touchmove', function (ev) {
     // prevent scrolling
     if (ev.target == canvas) {
       ev.preventDefault();
     }
-
+    
     var touch = ev.touches[0];
     var mouseEvent = new MouseEvent("mousemove", {
       clientX: touch.clientX,
       clientY: touch.clientY
     });
     canvas.dispatchEvent(mouseEvent);
-  }, false);
-
-
+  });
+  
+  
   socket.on('transmit pixel data', function (data) {
     data = data.pixelData;
-    colorCanvas(data);
+    points.push(data);
+    colorCanvas();
   });
 
-  /**
-   * 
-   * @param {Object} data - holds the position X, Y and color for drawing on the canvas
-   * @param {Number} data.x - the x position of the input
-   * @param {Number} data.Y - the Y position of the input
-   * 
-   * 
-   * takes in data to draw on the canvas
-   */
-
-  function colorCanvas (data) {
-    ctx.fillStyle = data.color;
-    ctx.fillRect(data.x, data.y, PIXEL_SIZE, PIXEL_SIZE);
+  canvas.addEventListener('touchend', resetPoints);
+  
+  function colorCanvas () {
+    console.log(points)
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var i = 1; i < points.length; i++) {
+      ctx.lineWidth = points[i].pixelSize;
+      ctx.lineStyle = points[i].color;
+      ctx.lineTo(points[i].x, points[i].y);
+    }
+    ctx.stroke();
+    ctx.closePath();
   }
 
   function paintCanvas(ev) {
     let pixelData = getMousePos(canvas, ev);
     pixelData.color = window.app.color;
+    pixelData.pixelSize = PIXEL_SIZE;
+    points.push(pixelData);
+    colorCanvas();
     
-    colorCanvas(pixelData);
     socketController.sendPixelData(pixelData)
   }
 
@@ -74,7 +82,10 @@
       x: mouseEvent.clientX - rect.left,
       y: mouseEvent.clientY - rect.top
     };
+  }
 
+  function resetPoints () {
+    points = [];
   }
 
 })();
