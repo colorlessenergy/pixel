@@ -48,6 +48,6 @@
 
   window.app = window.app || {};
 
-  // DEFAULT color to white
-  window.app.color = '#FFFFFF';
+  // DEFAULT color to #42445A
+  window.app.color = '#42445A';
 })();
