@@ -9,14 +9,14 @@
   canvas.height = 500;
   
   let PIXEL_SIZE = 25;
-  let points = [];
-
-  
   
   const ctx = canvas.getContext('2d');
   ctx.lineWidth = PIXEL_SIZE;
-  ctx.lineJoin = ctx.lineCap = 'round';
-  
+
+  // to make brush round
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
   const brushSizeSlider = document.querySelector('#brushSize');
 
   brushSizeSlider.addEventListener('input', function (ev) {
@@ -28,7 +28,6 @@
   });
 
   canvas.addEventListener('mousemove', paintCanvas);
-  canvas.addEventListener('mouseout', resetPoints)
   canvas.addEventListener('touchmove', function (ev) {
     // prevent scrolling
     if (ev.target == canvas) {
@@ -45,22 +44,30 @@
   
   
   socket.on('transmit pixel data', function (data) {
-    data = data.pixelData;
-    points.push(data);
-    colorCanvas();
+    colorCanvas(data.pixelData);
   });
 
-  canvas.addEventListener('touchend', resetPoints);
-  
-  function colorCanvas () {
-    console.log(points)
+  /**
+  *
+  * @param {Object} data - holds the position X, Y, color and size for drawing on the canvas
+  * @param {Number} data.x - the x position of the input
+  * @param {Number} data.y - the y position of the input
+  * @param {String} data.color - the color of the input
+  * @param {pixelSize} data.pixelSize - the size of the input
+  *
+  *
+  * takes in data to draw on the canvas.
+  * 
+  * We use moveTo(data.x, data.y) lineTo with the same value but add
+  * a small number to make the brush round.
+  */
+
+  function colorCanvas (pixelData) {
+    ctx.lineWidth = pixelData.pixelSize;
+    ctx.strokeStyle = pixelData.color;
     ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (var i = 1; i < points.length; i++) {
-      ctx.lineWidth = points[i].pixelSize;
-      ctx.lineStyle = points[i].color;
-      ctx.lineTo(points[i].x, points[i].y);
-    }
+    ctx.moveTo(pixelData.x, pixelData.y);
+    ctx.lineTo(pixelData.x + Number.MIN_VALUE, pixelData.y + Number.MIN_VALUE);
     ctx.stroke();
     ctx.closePath();
   }
@@ -69,10 +76,8 @@
     let pixelData = getMousePos(canvas, ev);
     pixelData.color = window.app.color;
     pixelData.pixelSize = PIXEL_SIZE;
-    points.push(pixelData);
-    colorCanvas();
-    
-    socketController.sendPixelData(pixelData)
+    colorCanvas(pixelData);
+    socketController.sendPixelData(pixelData);
   }
 
   // Get the position of the mouse relative to the canvas
@@ -83,9 +88,4 @@
       y: mouseEvent.clientY - rect.top
     };
   }
-
-  function resetPoints () {
-    points = [];
-  }
-
 })();
