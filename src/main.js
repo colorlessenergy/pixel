@@ -68,7 +68,7 @@ import socketController from './socket-controller.js';
     ctx.strokeStyle = pixelData.color;
     ctx.beginPath();
     ctx.moveTo(pixelData.x, pixelData.y);
-    ctx.lineTo(pixelData.x + Number.MIN_VALUE, pixelData.y + Number.MIN_VALUE);
+    ctx.lineTo(pixelData.x + 0.001, pixelData.y + 0.001);
     ctx.stroke();
     ctx.closePath();
   }
