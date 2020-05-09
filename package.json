@@ -1,0 +1,24 @@
+{
+  "name": "pixel",
+  "version": "1.0.0",
+  "description": "A canvas where people can draw together with the drawing updating live on each others website.",
+  "private": true,
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colorlessenergy/pixel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colorlessenergy/pixel/issues"
+  },
+  "homepage": "https://github.com/colorlessenergy/pixel#readme",
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
