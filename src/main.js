@@ -1,7 +1,8 @@
+import colorPicker from './colorpicker.js';
+import socketController from './socket-controller.js';
+
 (function () {
   'use strict'
-
-  const socketController = window.app.socket;
   const socket = socketController.getSocketObject();
 
   const canvas = document.querySelector('#canvas');

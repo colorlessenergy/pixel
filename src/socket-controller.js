@@ -1,3 +1,7 @@
+/**
+ * drawing data is sent live to every user connected with socketio
+ */
+
 (function () {
   'use strict'
   // const socket = io('http://localhost:8080');
@@ -12,7 +16,5 @@
     }
   }
 
-  window.app = window.app || {};
-
-  window.app.socket = socketController;
+  module.exports = socketController;
 })();

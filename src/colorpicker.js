@@ -1,3 +1,8 @@
+/*
+  https://github.com/Simonwep/pickr
+  integration of the library Pickr
+*/
+
 (function () {
   'use strict'
   
