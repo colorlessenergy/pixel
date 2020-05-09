@@ -9,6 +9,10 @@
   const pickr = Pickr.create({
     el: '.color-picker',
     theme: 'classic', // or 'monolith', or 'nano'
+    inline: true,
+    showAlways: true, 
+    useAsButton: true,
+
 
     swatches: [
       'rgba(244, 67, 54, 1)',
